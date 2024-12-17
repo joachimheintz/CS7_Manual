@@ -73,20 +73,20 @@
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Orchestra</span></p>
               <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-global-space/">Global Space</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements and Global Space</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-instruments/">Instruments</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-variables/">Variables</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types and Variables</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-macros/">Macros</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">User Defined Opcodes (UDO)</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#old-style-udo-definition">Old style UDO definition</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#new-style-udo-definition">New style UDO definition</a>
+    </li>
     </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-traditional-functional-code/">Traditional and Functional Code</a>
@@ -132,6 +132,12 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="user-defined-opcodes-udo">User Defined Opcodes (UDO)</h1>
+<p>User Defined Opcodes are functions written in Csound code. They are located in the global space of the orchestra code, or loaded in a text file via <code>#include</code>.</p>
+<p>The definition of a User Defined Opcode starts with the keyword <code>opcode</code> and ends with the keyword <code>endop</code>. The syntax and implementation of UDOs has changed in Csound 7; so there are two different syntax conventions which can be used.</p>
+<h2 id="old-style-udo-definition">Old style UDO definition</h2>
+<p>The implementation is described in detail in the manual page for <code>opcode</code> (link to that page).</p>
+<h2 id="new-style-udo-definition">New style UDO definition</h2>
+<p>(to be written, including the pass-by-reference as distinction to old style UDOs)</p>
               
             </div>
           </div><footer>

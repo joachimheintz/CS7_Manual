@@ -73,17 +73,27 @@
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Orchestra</span></p>
               <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-global-space/">Global Space</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements and Global Space</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Instruments</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#named-instruments">Named Instruments</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#order-of-execution">Order of Execution</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#initialization">Initialization</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#instances-and-events">Instances and Events</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#explicit-numbered-instances">Explicit Numbered Instances</a>
+    </li>
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-variables/">Variables</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types and Variables</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-macros/">Macros</a>
                   </li>
@@ -132,12 +142,183 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="instruments">Instruments</h1>
+<p>Instruments are the main building blocks in Csound. An instrument definition starts with the keyword <code>instr</code>, followed by a space, and a number or name. In case the numbers or names are separated by comma, the same instrument definition applies to different instrument numbers or names. The instrument definition ends with the keywor <code>endin</code>.</p>
+<pre><code>instr 10
+  puts(&quot;instrument 10&quot;,1)
+endin
+
+instr printme
+  puts(&quot;instrument 'printme'&quot;,1)
+endin
+
+instr Multiple, 2, 3
+  print(p1)
+endin
+</code></pre>
+<h2 id="named-instruments">Named Instruments</h2>
+<p>An instrument name may consist of any number of letters, digits, and the underscore (_) character, however, the first character must not be a digit. Optionally, the instrument name may be prefixed with the '+' character (see below), for example:</p>
+<p><code>instr +Reverb</code></p>
+<p>For all instrument names, a number is automatically assigned (note: if the message level (-m) is not zero, these numbers are printed to the console during orchestra compilation), following these rules:</p>
+<ul>
+<li>Any unused instrument numbers are taken up in ascending order, starting from 1.  </li>
+<li>The numbers are assigned in the order of instrument name definition, so named instruments that are defined later will always have a higher number (except if the '+' modifier is used).  </li>
+<li>If the instrument name was prefixed with '+', the assigned number will be higher than that of any of the (both numbered and named) other instruments without '+'. If there are multiple '+' instruments, the numbering of these will follow the order of definition, according to the above rule.</li>
+</ul>
+<p>Using '+' is mainly useful for global output or effect instruments, that must be performed after the other instruments.</p>
+<p>An example for instrument numbers:</p>
+<pre><code>instr 1, 2
+endin
+
+instr Instr1
+endin
+
+instr +Effect1, Instr2
+endin
+
+instr 100, Instr3, +Effect2, Instr4, 5
+endin
+</code></pre>
+<p>In this example, the instrument numbers are assigned as follows:</p>
+<pre><code>Instr1:  3
+Effect1: 101
+Instr2:  4
+Instr3:  6
+Effect2: 102
+Instr4:  7
+</code></pre>
+<p>Named instruments can be called by using the name in double quotes (note: the '+' character should be omitted), e.g.</p>
+<p><code>i "Effect1" 0 60</code></p>
+<p>in the score, or</p>
+<p><code>schedule("Effect1",0,60)</code></p>
+<p>in the orchestra code.</p>
+<h2 id="order-of-execution">Order of Execution</h2>
+<h3 id="initialization">Initialization</h3>
+<p>Initializing the instrument code follows the order as written in the text, regardless any instrument number. This is an example which increments a global i-variable:</p>
+<pre><code>giVal = 0
+
+instr 10
+  giVal += 1
+  print(giVal)
+endin
+schedule(10,0,1)
+
+instr printme
+  giVal += 1
+  print(giVal)
+endin
+schedule(&quot;printme&quot;,0,1)
+
+instr Multiple, 2, 3
+  giVal += 1
+  print(giVal)
+endin
+schedule(&quot;Multiple&quot;,0,1)
+schedule(2,0,1)
+schedule(3,0,1)
+</code></pre>
+<p>This returns (in assigning instrument number 1 to 'printme' and instrument number 4 to 'Multiple'):</p>
+<pre><code>instr 10:   giVal = 1.000
+instr 1:    giVal = 2.000
+instr 4:    giVal = 3.000
+instr 2:    giVal = 4.000
+instr 3:    giVal = 5.000
+</code></pre>
+<h3 id="performance">Performance</h3>
+<p>During performance the instruments are executed following their numbers (from low to high). This is an example which increments a global k-Variable:</p>
+<pre><code>gkVal init 0
+
+instr 10
+  gkVal += 1
+  printk(0,gkVal)
+  turnoff
+endin
+schedule(10,0,1)
+
+instr printme
+  gkVal += 1
+  printk(0,gkVal)
+  turnoff
+endin
+schedule(&quot;printme&quot;,0,1)
+
+instr Multiple, 2, 3
+  gkVal += 1
+  printk(0,gkVal)
+  turnoff
+endin
+schedule(&quot;Multiple&quot;,0,1)
+schedule(2,0,1)
+schedule(3,0,1)
+</code></pre>
+<p>This returns (in assigning instrument number 1 to 'printme' and instrument number 4 to 'Multiple'):</p>
+<pre><code>instr 1:    time     0.00000:     1.00000
+instr 2:    time     0.00000:     2.00000
+instr 3:    time     0.00000:     3.00000
+instr 4:    time     0.00000:     4.00000
+instr 10:   time     0.00000:     5.00000
+</code></pre>
+<h2 id="instances-and-events">Instances and Events</h2>
+<p>Instrument code gets loaded into the audio engine as <em>instances</em>. Instances can be loaded simultaneously or sequentially without and predefined limit. </p>
+<p>Instances are called by <em>events</em>. These <em>instrument events</em> can originate from different sources:<br />
+1. The standard numeric score as in <code>i 1 0 1</code><br />
+2. Orchestra opcodes as in <code>schedule(1,0,1)</code><br />
+3. MIDI note-on messages.<br />
+4. Real-time input via keys, API or network.</p>
+<p>Note that a new instrument instance tries to re-use the memory allocation of an old instance. This might result in unexpected behaviour as the second instance continues where the first instance left:</p>
+<pre><code>instr 1
+  kVal = random:k(0,10)
+  prints(&quot;kVal initialized as %f\n&quot;,i(kVal))
+  printks(&quot;kVal rendered as %f\n&quot;,0,kVal)
+  turnoff
+endin
+schedule(1,0,1)
+schedule(1,1,1)
+</code></pre>
+<pre><code>kVal initialized as 0.000000
+kVal rendered as 8.828730
+kVal initialized as 8.828730
+kVal rendered as 2.913418
+</code></pre>
+<h2 id="explicit-numbered-instances">Explicit Numbered Instances</h2>
+<p>If an instrument is called with a fractional number, this number indicates a certain instance. This feature allows to treat different instances in a different way.</p>
+<pre><code>instr 1
+  print(p1)
+  if (p1 == 1.001) then
+    puts(&quot;hu&quot;,1)
+  else
+    puts(&quot;ha&quot;,1)  
+  endif
+endin
+schedule(1.001,0,1)
+schedule(1.002,1,1)
+
+instr Two
+  print(p1)
+  if (p1 == 2.001) then
+    puts(&quot;ho&quot;,1)
+  else
+    puts(&quot;hi&quot;,1)  
+  endif
+endin
+schedule(&quot;Two.001&quot;,2,1)
+schedule(&quot;Two.002&quot;,3,1)
+</code></pre>
+<p>This returns:</p>
+<pre><code>instr 1:    p1 = 1.001
+hu
+instr 1:    p1 = 1.002
+ha
+instr 2:    p1 = 2.001
+ho
+instr 2:    p1 = 2.002
+hi
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../orc-global-space/" class="btn btn-neutral float-left" title="Global Space"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../orc-data-types/" class="btn btn-neutral float-right" title="Data Types">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../orc-header-statements/" class="btn btn-neutral float-left" title="Header Statements and Global Space"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../orc-data-types/" class="btn btn-neutral float-right" title="Data Types and Variables">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -160,7 +341,7 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../orc-global-space/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../orc-header-statements/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../orc-data-types/" style="color: #fcfcfc">Next &raquo;</a></span>

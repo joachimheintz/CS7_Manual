@@ -75,15 +75,11 @@
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Orchestra</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-global-space/">Global Space</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements and Global Space</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-instruments/">Instruments</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-variables/">Variables</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types and Variables</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-macros/">Macros</a>
                   </li>
@@ -131,7 +127,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="the-csoundcommand">The <code>csound</code>command</h1>
+                <h1 id="the-csound-command">The <code>csound</code> command</h1>
+<p>When Csound is installed, the command <code>csound</code> serves as a basic frontend which can be invoked from a Terminal or DOS window. The syntax is</p>
+<p><code>csound [options] [.csd file]</code></p>
+<p>or </p>
+<p><code>csound [options] [.orc file] [.sco file]</code></p>
+<p>Rather than <em>options</em> the term <em>flags</em> is used frequently.</p>
+<p>This command will execute the file "test.csd" (located in the current directory) and write the audio output to the digital-to-analog converter in real time:</p>
+<p><code>csound -o dac test.csd</code></p>
+<p>This command will execute the file "bla.csd" in the parent directory and render the output to the 32-bit floating-point sound file "bla.wav":</p>
+<p><code>csound -o bla.wav -f ../bla.csd</code></p>
               
             </div>
           </div><footer>

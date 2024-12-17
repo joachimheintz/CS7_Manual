@@ -73,15 +73,11 @@
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Orchestra</span></p>
               <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-global-space/">Global Space</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements and Global Space</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-instruments/">Instruments</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-variables/">Variables</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types and Variables</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-macros/">Macros</a>
                   </li>
@@ -131,7 +127,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="traditional-and-functional-code">Traditional and functional code</h1>
+                <h1 id="traditional-and-functional-code-style">Traditional and Functional Code Style</h1>
+<p>Since Csound 6 it is possible to write Csound orchestra code in functional style. Csound 7 removed some limitations so that now both ways of Csound code can be used universally.</p>
+<p>The traditional way of writing Csound code has the output of an opcode left of the opcode name, separated by a space or tab. If there are several outputs, they are separated by commas. The input argument is written right hand side of the opcode name, saparated by a space or tab. If there are several inputs, they are separated by commas.</p>
+<p><code>aLeft,aRight pan2 aSig,0.5</code></p>
+<p>The functional way of writing Csound code sets an equal sign between output(s) and opcode name, and puts the input argument(s) in parenthesis which follow the opcode name. The rate of the opcode (<code>i</code> or <code>k</code> or <code>a</code>) is specified after a colon which follows the opcode name.</p>
+<p><code>aLeft,aRight = pan2:a(aSig,0.5)</code></p>
+<p>In the case of <code>pan2</code> the <code>:a</code> can be omitted because <code>pan2</code> only has this a-rate version. Other opcodes have different rates so that specifying the rate is mandatory. </p>
+<pre><code>aSig = oscili:a(0.2,400)
+kSig = oscili:k(10,0.5)
+</code></pre>
               
             </div>
           </div><footer>

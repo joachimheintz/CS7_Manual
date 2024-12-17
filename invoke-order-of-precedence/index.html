@@ -75,15 +75,11 @@
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Orchestra</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-global-space/">Global Space</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-header-statements/">Header Statements and Global Space</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-instruments/">Instruments</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-variables/">Variables</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types and Variables</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-macros/">Macros</a>
                   </li>
@@ -132,12 +128,21 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="order-of-precedence">Order of precedence</h1>
+<p>There are five places where options for Csound performance may be set. They are processed in the following order:</p>
+<ol>
+<li>Csound's own defaults  </li>
+<li>File defined by the <code>CSOUND7RC</code> environment variable, or <code>.csound7rc</code> file in the HOME directory  </li>
+<li>A <code>.csound7rc</code> file in the current directory  </li>
+<li>The <code>&lt;CsOptions&gt;</code> tag in a <code>.csd</code> file  </li>
+<li>Passed on the Csound command line</li>
+</ol>
+<p>The later options in the list will override any earlier ones. As of version 5.01 of Csound, sample and control rate override flags (-r and -k) specified anywhere override sr, kr, and ksmps defined in the orchestra header.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../invoke-environment-variables/" class="btn btn-neutral float-left" title="Environment Variables"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../orc-header-statements/" class="btn btn-neutral float-right" title="Header Statements">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../orc-header-statements/" class="btn btn-neutral float-right" title="Header Statements and Global Space">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>

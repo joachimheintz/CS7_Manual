@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Header Statements - Csound 7 Manual</title>
+    <title>Header Statements and Global Space - Csound 7 Manual</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Header Statements";
+        var mkdocs_page_name = "Header Statements and Global Space";
         var mkdocs_page_input_path = "orc-header-statements.md";
         var mkdocs_page_url = null;
       </script>
@@ -73,17 +73,13 @@
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Orchestra</span></p>
               <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Header Statements</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Header Statements and Global Space</a>
     <ul class="current">
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-global-space/">Global Space</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-instruments/">Instruments</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../orc-variables/">Variables</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../orc-data-types/">Data Types and Variables</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../orc-macros/">Macros</a>
                   </li>
@@ -122,7 +118,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Syntax of the Orchestra</li>
-      <li class="breadcrumb-item active">Header Statements</li>
+      <li class="breadcrumb-item active">Header Statements and Global Space</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -131,13 +127,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="header-statements">Header statements</h1>
+                <h1 id="header-statements-and-global-space">Header Statements and Global Space</h1>
+<p>The Orchestra Header contains global information that applies to all instruments and defines aspects of Csound's output. It is sometimes referred to as <em>instr 0</em>, because it behaves as an instrument, but without k- or a-rate processing (i.e. only opcodes and instructions that work at i-rate are allowed).</p>
+<p>The most essential statements given in the orchestra header are:</p>
+<p><code>sr</code> the sample rate (default 44100)</p>
+<p><code>ksmps</code> the number of samples for one control period (default 10)<br />
+NOTE: It is recommended to specify <code>ksmps</code> and let Csound calculate <code>kr</code>. <code>ksmps</code> must be an integer and should usually be a power of two.</p>
+<p><code>nchnls</code> the number of audio channels (default 1)<br />
+NOTE: This refers to both, output and input channels. Use <code>nchnls_i</code> in case input and output do not have the same number of channels.</p>
+<p><code>0dbfs</code> the number which serves as amplitude value for zero dB full scale (default 32768)</p>
+<p>A standard Csound header may look like this:</p>
+<p><code>sr = 48000
+ksmps = 32
+nchnls = 2
+0dbfs = 1</code></p>
+<p>Other common header statements:</p>
+<p><code>nchnls_i</code> the number of input channels (if different from <code>nchnls</code>)</p>
+<p><code>A4</code> the frequency set to pitch A4 (default 440)</p>
+<p><code>seed</code> sets the global seed for most random generators<br />
+NOTE: The syntax is <code>seed 0</code> or <code>seed(0)</code> but NOT <code>seed = 0</code></p>
+<p><code>massign</code> assigns incoming midi to a specific instrument</p>
+<p><code>pgmassign</code> assigns a MIDI program number to a specific instrument</p>
+<p><code>ctrlinit</code> sets the initial values for a set of MIDI controllers</p>
+<p><code>ftgen</code> generates a function table</p>
+<p>The instrument header is part of the global space. This space continues between and after the instrument code, and is evaluated as a whole before any instrument is running. </p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../invoke-order-of-precedence/" class="btn btn-neutral float-left" title="Order of Precedence"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../orc-global-space/" class="btn btn-neutral float-right" title="Global Space">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../orc-instruments/" class="btn btn-neutral float-right" title="Instruments">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -163,7 +182,7 @@
       <span><a href="../invoke-order-of-precedence/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../orc-global-space/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../orc-instruments/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
