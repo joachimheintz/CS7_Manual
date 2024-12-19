@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Variables - Csound 7 Manual</title>
+    <title>Note Event Durations - Csound 7 Manual</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Variables";
-        var mkdocs_page_input_path = "orc-variables.md";
+        var mkdocs_page_name = "Note Event Durations";
+        var mkdocs_page_input_path = "sco-note-durations.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -87,7 +87,7 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Syntax of the Score</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../sco-parameter-fields/">Parameter Fields</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../sco-preprocessing/">Preprocessing</a>
@@ -99,6 +99,28 @@
                   <li class="toctree-l1"><a class="reference internal" href="../sco-included-files/">Included Files</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../sco-expressions/">Expressions</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Note Event Durations</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overwriting-the-duration-in-the-instrument">Overwriting the Duration in the Instrument</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#zero-duration">Zero Duration</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#negative-duration">Negative Duration</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#legato-or-tied-notes">Legato or Tied Notes</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#allowing-more-than-one-instance">Allowing More Than One Instance</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#one-single-negative-duration">One Single Negative Duration</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#summary">Summary</a>
+    </li>
+    </ul>
                   </li>
               </ul>
       </div>
@@ -115,7 +137,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Variables</li>
+          <li class="breadcrumb-item">Syntax of the Score</li>
+      <li class="breadcrumb-item active">Note Event Durations</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -124,10 +147,125 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="variables">Variables</h1>
+                <h1 id="note-event-durations">Note Event Durations</h1>
+<p>The third parameter field in a note event (accessible as <code>p3</code> in the called instrument) sets the duration of the instrument instance. However, there are some notable cases and features, in particular negative duration.</p>
+<h2 id="overwriting-the-duration-in-the-instrument">Overwriting the Duration in the Instrument</h2>
+<p>This is a simple but versatile feature. Any duration given by the note event can be overwritten inside the instrument:</p>
+<pre><code>instr 1
+  p3 = 2
+  aSig = oscili:a(.2,300)
+  outall(aSig)
+endin
+schedule(1,0,100)
+</code></pre>
+<h2 id="zero-duration">Zero Duration</h2>
+<p>Calling an instrument with duration zero means that only the inilialization pass is executed.</p>
+<pre><code>instr 1
+  // this will be printed
+  prints(&quot;i-rate\n&quot;)
+  // this will not be printed
+  printks(&quot;k-rate\n&quot;,0)
+endin
+schedule(1,0,0)
+</code></pre>
+<h2 id="negative-duration">Negative Duration</h2>
+<h3 id="legato-or-tied-notes">Legato or Tied Notes</h3>
+<p>Basically, negative duration (usually <code>-1</code>) was introduced into Csound as feature for tied notes. If one instance is called with a negative duration, the next call will continue this instance.</p>
+<pre><code>instr 1
+  aSig = poscil:a(0.2,p4)
+  outall(aSig)
+endin
+schedule(1,0,-1,400)
+schedule(1,1.1,-1,500)
+schedule(1,2.2,1,444)
+</code></pre>
+<h2 id="allowing-more-than-one-instance">Allowing More Than One Instance</h2>
+<p>It is possible to run several instances called by negative duration at the same time when these instances are called with different fractional numbers.</p>
+<pre><code>&lt;CsoundSynthesizer&gt; 
+&lt;CsOptions&gt; 
+-odac
+&lt;/CsOptions&gt; 
+&lt;CsInstruments&gt; 
+instr 1
+  aSig = poscil:a(0dbfs/5,p4)
+  outall(aSig)
+endin
+&lt;/CsInstruments&gt; 
+&lt;CsScore&gt;
+// normal behaviour: only one instance
+i 1 0 -1 400
+i 1 1 -1 500
+i 1 2  1 444
+s
+// explicit instances: simultaneous instances
+i 1.01 1 -1 400
+i 1.02 2 -1 500
+i 1.03 3  1 444
+&lt;/CsScore&gt; 
+&lt;/CsoundSynthesizer&gt; 
+</code></pre>
+<h3 id="one-single-negative-duration">One Single Negative Duration</h3>
+<p>If there is only one negative duration, the called instrument instance will play for an indefinite duration; in other words: as long as Csound is running.</p>
+<pre><code>&lt;CsoundSynthesizer&gt; 
+&lt;CsOptions&gt; 
+-odac
+&lt;/CsOptions&gt; 
+&lt;CsInstruments&gt; 
+instr 1
+  aSig = poscil:a(0dbfs/5,400)
+  outall(aSig)
+endin
+schedule(1,0,-1)
+&lt;/CsInstruments&gt; 
+&lt;CsScore&gt;
+&lt;/CsScore&gt; 
+&lt;/CsoundSynthesizer&gt; 
+</code></pre>
+<p>This code runs "endlessly" because the score section is empty. Putting the note event in the score will terminate Csound immediately as -1 is no duration and the last score event defines the overall duration of Csound's performance.</p>
+<pre><code>&lt;CsoundSynthesizer&gt; 
+&lt;CsOptions&gt; 
+-odac
+&lt;/CsOptions&gt; 
+&lt;CsInstruments&gt; 
+instr 1
+  aSig = poscil:a(0dbfs/5,400)
+  outall(aSig)
+endin
+&lt;/CsInstruments&gt; 
+&lt;CsScore&gt;
+i 1 0 -1
+&lt;/CsScore&gt; 
+&lt;/CsoundSynthesizer&gt; 
+</code></pre>
+<p>There must be a <code>e</code> or <code>f0</code> statement followed by a positive duration to prevent this termination.</p>
+<pre><code>&lt;CsoundSynthesizer&gt; 
+&lt;CsOptions&gt; 
+-odac
+&lt;/CsOptions&gt; 
+&lt;CsInstruments&gt; 
+instr 1
+  aSig = poscil:a(0dbfs/5,400)
+  outall(aSig)
+endin
+&lt;/CsInstruments&gt; 
+&lt;CsScore&gt;
+i 1 0 -1
+e 10
+&lt;/CsScore&gt; 
+&lt;/CsoundSynthesizer&gt; 
+</code></pre>
+<h2 id="summary">Summary</h2>
+<ol>
+<li>If an instrument is called twice with negative duration, the second call will terminate the first instance.  </li>
+<li>Only if fractional instrument numbers are used. several instances can be run simultaneously.  </li>
+<li>One single instance will run as long as Csound runs.</li>
+</ol>
               
             </div>
           </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../sco-expressions/" class="btn btn-neutral float-left" title="Expressions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
 
   <hr/>
 
@@ -148,6 +286,8 @@
   <div class="rst-versions" role="note" aria-label="Versions">
   <span class="rst-current-version" data-toggle="rst-current-version">
     
+    
+      <span><a href="../sco-expressions/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
   </span>
