@@ -43,7 +43,7 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">Introduction</span></p>
+              <p class="caption"><span class="caption-text">Preface</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../intro-whats-new-in-csound-7/">What's New in Csound 7</a>
                   </li>
@@ -90,11 +90,15 @@
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Parameter Fields</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#p-fields-in-instrument-events">P-Fields in Instrument Events</a>
+    </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-note-durations/">Durations in Instrument Events</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../sco-preprocessing/">Preprocessing</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-statements/">Statements</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-statements/">List of Statements</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../sco-macros/">Macros</a>
                   </li>
@@ -102,7 +106,16 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../sco-expressions/">Expressions</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-note-durations/">Note Event Durations</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-scripts/">Scripts</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Miscellanea</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-nomenclature/">Nomenclature</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-links/">Links</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
               </ul>
       </div>
@@ -129,13 +142,98 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="parameter-fields">Parameter fields</h1>
+                <h1 id="parameter-fields">Parameter Fields</h1>
+<p>The standard numeric score consists of lines representing score statements. Each statement begins with a single character denoting the type of statement, followed by a number of parameters which specify this statement. Parameters are separated by spaces or tabs. The parameter fields (p-fields) are numbered and abbreviated as <em>p1, p2, p3, ...</em></p>
+<table>
+<thead>
+<tr>
+<th>Char</th>
+<th>p1</th>
+<th>p2</th>
+<th>p3</th>
+<th>p4</th>
+<th>p5</th>
+<th>p6</th>
+<th>Type of statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>i</strong></td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>instrument call</td>
+</tr>
+<tr>
+<td><strong>f</strong></td>
+<td>1</td>
+<td>0</td>
+<td>1025</td>
+<td>10</td>
+<td>1</td>
+<td>-</td>
+<td>function table creation</td>
+</tr>
+<tr>
+<td><strong>a</strong></td>
+<td>0</td>
+<td>0</td>
+<td>80</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>advances score time</td>
+</tr>
+<tr>
+<td><strong>e</strong></td>
+<td>60</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>ends score execution</td>
+</tr>
+</tbody>
+</table>
+<p>The p-fields have different meanings in the different statements. In the example above, p1 means the instrument number for the <strong>i</strong>-statement, the function table number for the <strong>f</strong>-statement, is without any meaning for the <strong>a</strong>-statement, and signifies the time for the <strong>e</strong>-statement.</p>
+<h2 id="p-fields-in-instrument-events">P-Fields in Instrument Events</h2>
+<p>Instrument events starting with the character <strong>i</strong> are by far the most important score statements. In fact, the score is a collection of instrument calls plus some extra statements to ease the control and overview for large scores.</p>
+<p>For each instrument event, the first three parameters are mandatory and carry a fixed meaning:</p>
+<ul>
+<li><em>p1</em> is the instrument number or name  </li>
+<li><em>p2</em> is the time to start the instrument instance  </li>
+<li><em>p3</em> is the duration of the instrument instance to run</li>
+</ul>
+<p>The meaning of the optional parameters <em>p4, p5, ...</em> is given by the instrument definition. All score parameters are accessible in the instrument definition as <code>p1</code>, <code>p2</code> etc.</p>
+<pre><code>&lt;CsoundSynthesizer&gt; 
+&lt;CsOptions&gt; 
+-odac
+&lt;/CsOptions&gt; 
+&lt;CsInstruments&gt; 
+instr 1
+  print(p1,p2,p3)
+  amp:i = p4*0dbfs
+  freq:i = p5
+  aSig = poscil:a(amp,freq)
+  outall(aSig)
+endin
+&lt;/CsInstruments&gt; 
+&lt;CsScore&gt;
+i 1 0 3 0.2 400
+&lt;/CsScore&gt; 
+&lt;/CsoundSynthesizer&gt; 
+</code></pre>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../orc-traditional-functional-code/" class="btn btn-neutral float-left" title="Traditional and Functional Code"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../sco-preprocessing/" class="btn btn-neutral float-right" title="Preprocessing">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../sco-note-durations/" class="btn btn-neutral float-right" title="Durations in Instrument Events">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -161,7 +259,7 @@
       <span><a href="../orc-traditional-functional-code/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../sco-preprocessing/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../sco-note-durations/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

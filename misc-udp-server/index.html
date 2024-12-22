@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>How Csound Works - Csound 7 Manual</title>
+    <title>UDP Server - Csound 7 Manual</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "How Csound Works";
-        var mkdocs_page_input_path = "invoke-how-csound-works.md";
+        var mkdocs_page_name = "UDP Server";
+        var mkdocs_page_input_path = "misc-udp-server.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -55,12 +55,8 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Invoking Csound</span></p>
-              <ul class="current">
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">How Csound Works</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#csounds-processing-buffers">Csound's processing buffers</a>
-    </li>
-    </ul>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
@@ -110,12 +106,14 @@
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Miscellanea</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../misc-nomenclature/">Nomenclature</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-links/">Links</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">UDP Server</a>
+    <ul class="current">
+    </ul>
                   </li>
               </ul>
       </div>
@@ -132,8 +130,8 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">Invoking Csound</li>
-      <li class="breadcrumb-item active">How Csound Works</li>
+          <li class="breadcrumb-item">Miscellanea</li>
+      <li class="breadcrumb-item active">UDP Server</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -142,20 +140,13 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="how-csound-works">How Csound works</h1>
-<p>Csound processes and generates output using "unit generators" (ugens) called opcodes. These opcodes are used to define instruments in the orchestra. When you run Csound, the engine loads the base Opcodes, and the opcodes contained in separate loadable "opcode libraries" . It then interprets the orchestra (through the orchestra reader). The engine sets up an instrument processing chain, which then receives events from the score or in real-time. The processing chain uses the input/output modules to generate output. There are modules that can write to file, or generate real-time audio output.</p>
-<p><img alt="The Csound5 Modular structure." src="../img/engine.png" /></p>
-<h2 id="csounds-processing-buffers">Csound's processing buffers</h2>
-<p>Csound processes audio in sample blocks called buffers. There are three separate buffer layers:</p>
-<p><strong>spout</strong> = Csound's innermost software buffer, contains <code>ksmps</code> sample frames. Csound processes real-time control events once every ksmps sample frames.</p>
-<p><strong>-b</strong> = Csound's intermediate software buffer (the "software" buffer), in sample frames. Should be (but does not need to be) an integral multiple of ksmps (can equal ksmps too). Once per ksmps sample frames, Csound copies spout to the -b buffer. Once per -b sample frames, Csound copies the -b buffer to the -B "hardware" buffer.</p>
-<p><strong>-B</strong> = The sound card's internal buffer (the "hardware" buffer), in sample frames. Should be (and may need to be) an integral multiple of -b. If Csound misses delivering a -b one time, the extra -b sample frames in -b are still there for the sound card to keep playing while Csound catches up. But they can be the same size if you're willing to bet Csound can always keep up with the sound card.</p>
+                <h1 id="udp-server">UDP Server</h1>
+<p>the excellent <a href="https://csound.com/manual/udpserver.html">https://csound.com/manual/udpserver.html</a> goes here</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../intro-copyright-notice/" class="btn btn-neutral float-left" title="Copyright Notice"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../invoke-the-csd-file-format/" class="btn btn-neutral float-right" title="The `.csd` File Format">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../misc-links/" class="btn btn-neutral float-left" title="Links"><span class="icon icon-circle-arrow-left"></span> Previous</a>
     </div>
 
   <hr/>
@@ -178,10 +169,8 @@
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../intro-copyright-notice/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../misc-links/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
-    
-      <span><a href="../invoke-the-csd-file-format/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

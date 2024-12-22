@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Note Event Durations - Csound 7 Manual</title>
+    <title>Durations in Instrument Events - Csound 7 Manual</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Note Event Durations";
+        var mkdocs_page_name = "Durations in Instrument Events";
         var mkdocs_page_input_path = "sco-note-durations.md";
         var mkdocs_page_url = null;
       </script>
@@ -43,7 +43,7 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">Introduction</span></p>
+              <p class="caption"><span class="caption-text">Preface</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../intro-whats-new-in-csound-7/">What's New in Csound 7</a>
                   </li>
@@ -90,17 +90,7 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../sco-parameter-fields/">Parameter Fields</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-preprocessing/">Preprocessing</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-statements/">Statements</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-macros/">Macros</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-included-files/">Included Files</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../sco-expressions/">Expressions</a>
-                  </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Note Event Durations</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Durations in Instrument Events</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#overwriting-the-duration-in-the-instrument">Overwriting the Duration in the Instrument</a>
     </li>
@@ -122,6 +112,27 @@
     </li>
     </ul>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-preprocessing/">Preprocessing</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-statements/">List of Statements</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-macros/">Macros</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-included-files/">Included Files</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-expressions/">Expressions</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../sco-scripts/">Scripts</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Miscellanea</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-nomenclature/">Nomenclature</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-links/">Links</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -138,7 +149,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">Syntax of the Score</li>
-      <li class="breadcrumb-item active">Note Event Durations</li>
+      <li class="breadcrumb-item active">Durations in Instrument Events</li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -147,8 +158,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="note-event-durations">Note Event Durations</h1>
-<p>The third parameter field in a note event (accessible as <code>p3</code> in the called instrument) sets the duration of the instrument instance. However, there are some notable cases and features, in particular negative duration.</p>
+                <h1 id="instrument-event-durations">Instrument Event Durations</h1>
+<p>The third parameter field in an instrument event (accessible as <code>p3</code> in the called instrument) sets the duration of the instrument instance. However, there are some notable cases and features, in particular negative duration.</p>
 <h2 id="overwriting-the-duration-in-the-instrument">Overwriting the Duration in the Instrument</h2>
 <p>This is a simple but versatile feature. Any duration given by the note event can be overwritten inside the instrument:</p>
 <pre><code>instr 1
@@ -264,7 +275,8 @@ e 10
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../sco-expressions/" class="btn btn-neutral float-left" title="Expressions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../sco-parameter-fields/" class="btn btn-neutral float-left" title="Parameter Fields"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../sco-preprocessing/" class="btn btn-neutral float-right" title="Preprocessing">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -287,8 +299,10 @@ e 10
   <span class="rst-current-version" data-toggle="rst-current-version">
     
     
-      <span><a href="../sco-expressions/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../sco-parameter-fields/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../sco-preprocessing/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
