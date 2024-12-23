@@ -58,9 +58,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -115,6 +115,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -146,9 +148,13 @@
 <p><code>aLeft,aRight pan2 aSig,0.5</code></p>
 <p>The functional way of writing Csound code sets an equal sign between output(s) and opcode name, and puts the input argument(s) in parenthesis which follow the opcode name. The rate of the opcode (<code>i</code> or <code>k</code> or <code>a</code>) is specified after a colon which follows the opcode name.</p>
 <p><code>aLeft,aRight = pan2:a(aSig,0.5)</code></p>
-<p>In the case of <code>pan2</code> the <code>:a</code> can be omitted because <code>pan2</code> only has this a-rate version. Other opcodes have different rates so that specifying the rate is mandatory. </p>
+<p>In the case of <code>pan2</code> the <code>:a</code> can be omitted because <code>pan2</code> only has this a-rate version. Other opcodes have different rates so that specifying the rate is mandatory in Csound 6. </p>
 <pre><code>aSig = oscili:a(0.2,400)
 kSig = oscili:k(10,0.5)
+</code></pre>
+<p>In Csound 7, the parser selects the appropriate rate by the output variable so that this code is fine, too:</p>
+<pre><code>aSig = oscili(0.2,400)
+kSig = oscili(10,0.5)
 </code></pre>
               
             </div>

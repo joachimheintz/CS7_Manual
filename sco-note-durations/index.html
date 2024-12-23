@@ -58,9 +58,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -133,6 +133,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -158,8 +160,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="instrument-event-durations">Instrument Event Durations</h1>
-<p>The third parameter field in an instrument event (accessible as <code>p3</code> in the called instrument) sets the duration of the instrument instance. However, there are some notable cases and features, in particular negative duration.</p>
+                <h1 id="durations-in-instrument-events">Durations in Instrument Events</h1>
+<p>The third parameter field in an instrument event (accessible as <code>p3</code> in the called instrument) sets the duration of the instrument instance. However, there are some notable cases and features.</p>
 <h2 id="overwriting-the-duration-in-the-instrument">Overwriting the Duration in the Instrument</h2>
 <p>This is a simple but versatile feature. Any duration given by the note event can be overwritten inside the instrument:</p>
 <pre><code>instr 1
@@ -181,7 +183,7 @@ schedule(1,0,0)
 </code></pre>
 <h2 id="negative-duration">Negative Duration</h2>
 <h3 id="legato-or-tied-notes">Legato or Tied Notes</h3>
-<p>Basically, negative duration (usually <code>-1</code>) was introduced into Csound as feature for tied notes. If one instance is called with a negative duration, the next call will continue this instance.</p>
+<p>Basically, negative duration (usually <code>-1</code>) was introduced into Csound as feature for tied notes. If one instance is called with a negative duration, the next call will continue this instance rather than invoking a new instance.</p>
 <pre><code>instr 1
   aSig = poscil:a(0.2,p4)
   outall(aSig)

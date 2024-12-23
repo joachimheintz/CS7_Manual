@@ -58,9 +58,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -115,6 +115,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -141,7 +143,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="nomenclature">Nomenclature</h1>
-<p>Throughout this document, opcodes are indicated in <strong>boldface</strong> and their argument and result mnemonics, when mentioned in the text, are given in <em>italics</em>. Argument names are generally mnemonic (<em>amp</em>, <em>phs</em>), and the result is usually denoted by the letter <code>r</code>. Both are preceded by a type qualifier <code>i</code>, <code>k</code>, <code>a</code>, or <code>x</code> (e.g. <code>kamp</code>, <code>iphs</code>, <code>ar</code>, <code>xphs</code>). The prefix <code>i</code> denotes scalar values valid at note init time; prefixes <code>k</code> or <code>a</code> denote control (scalar) and audio (vector) values, modified and referenced continuously throughout performance (i.e. at every control period while the instrument is active). Arguments are used at the prefix-listed times; results are created at their listed times, then remain available for use as inputs elsewhere. With few exceptions, argument rates may not exceed the rate of the result. The validity of inputs is defined by the following:</p>
+<p>Throughout this manual, opcodes are indicated in <strong>boldface</strong> and their argument and result mnemonics, when mentioned in the text, are given in <em>italics</em>. Argument names are generally mnemonic (<em>amp</em>, <em>phs</em>), and the result is usually denoted by the letter <code>r</code>. Both are preceded by a type qualifier <code>i</code>, <code>k</code>, <code>a</code>, or <code>x</code> (e.g. <code>kamp</code>, <code>iphs</code>, <code>ar</code>, <code>xphs</code>). The prefix <code>i</code> denotes scalar values valid at note init time; prefixes <code>k</code> or <code>a</code> denote control (scalar) and audio (vector) values, modified and referenced continuously throughout performance (i.e. at every control period while the instrument is active). Arguments are used at the prefix-listed times; results are created at their listed times, then remain available for use as inputs elsewhere. With few exceptions, argument rates may not exceed the rate of the result. The validity of inputs is defined by the following:</p>
 <ul>
 <li>arguments with prefix <code>i</code> must be valid at init time;  </li>
 <li>arguments with prefix <code>k</code> can be either control or init values (which remain valid);  </li>

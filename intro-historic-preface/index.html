@@ -60,9 +60,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -115,6 +115,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -140,7 +142,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="historical-preface-by-berry-vercoe-1996">Historical Preface by Berry Vercoe (1996)</h1>
+                <h1 id="historical-preface-by-berry-vercoe">Historical Preface by Berry Vercoe</h1>
 <p>Realizing music by digital computer involves synthesizing audio signals with discrete points or samples representative of continuous waveforms. There are many ways to do this, each affording a different manner of control. Direct synthesis generates waveforms by sampling a stored function representing a single cycle; additive synthesis generates the many partials of a complex tone, each with its own loudness envelope; subtractive synthesis begins with a complex tone and filters it. Non-linear synthesis uses frequency modulation and waveshaping to give simple signals complex characteristics, while sampling and storage of a natural sound allows it to be used at will.</p>
 <p>Since comprehensive moment-by-moment specification of sound can be tedious, control is gained in two ways: 1) from the instruments in an orchestra, and 2) from the events within a score. An orchestra is really a computer program that can produce sound, while a score is a body of data which that program can react to. Whether a rise-time characteristic is a fixed constant in an instrument, or a variable of each note in the score, depends on how the user wants to control it.</p>
 <p>The instruments in a Csound orchestra (see Syntax of the Orchestra) are defined in a simple syntax that invokes complex audio processing routines. A score (see The Standard Numeric Score) passed to this orchestra contains numerically coded pitch and control information, in standard numeric score format. Although many users are content with this format, higher level score processing languages are often convenient.</p>

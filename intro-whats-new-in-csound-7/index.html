@@ -51,7 +51,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#new-udo-syntax-and-pass-by-reference">New UDO Syntax and Pass-by-reference</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#removed-limitation-for-functional-style">Removed Limitation for Functional Style</a>
+    <li class="toctree-l2"><a class="reference internal" href="#removed-limitations-for-functional-style">Removed Limitations for Functional Style</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#for-loop">For-Loop</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#user-defined-types">User-Defined Types</a>
     </li>
     </ul>
                   </li>
@@ -66,9 +70,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -121,6 +125,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -147,10 +153,58 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="whats-new-in-csound-7">What's new in Csound 7</h1>
-<p>Csound 7 brings presumably the biggest changes which ever happened in Csound's history from one major Version to the next. Here is an overview about the major items. Note that nevertheless Csound 7 keeps backwards compatibility: You can despite new syntax features still run any valid Csound code from the past.</p>
+<p>Csound 7 brings major changes which offer new possibilities for users and modernize coding. Nevertheless Csound 7 keeps backwards compatibility: Despite new syntax features any valid Csound code from the past can be run without any code change.</p>
 <h2 id="explicit-variable-types">Explicit Variable Types</h2>
+<p>Variable names no longer have to start with <code>i</code>, <code>k</code>, <code>a</code> etc. to declare their data type implicitely. Instead any name (except existing opcodes or keywords) can be used, and the type declared explicitely:</p>
+<pre><code>maxamp@global:i = 0dbfs / 5
+
+instr 1
+  freq:i = 444
+  ramp:k = linseg(maxamp,p3,0)
+  sound:a = poscil(ramp,freq)
+  outall(sound)
+endin
+schedule(1,0,2)
+</code></pre>
 <h2 id="new-udo-syntax-and-pass-by-reference">New UDO Syntax and Pass-by-reference</h2>
-<h2 id="removed-limitation-for-functional-style">Removed Limitation for Functional Style</h2>
+<p>User Defined Opcodes now follow the syntax <code>opcode name(inargs):(outargs)</code>. </p>
+<pre><code>opcode myop(inval:i):(i)
+  xout(inval+1)
+endop
+
+opcode empty():void
+  puts(&quot;empty!&quot;,1)
+endop
+
+instr 1
+  print(myop(17))
+  empty()
+endin
+schedule(1,0,0
+</code></pre>
+<p>Give example for pass-by-reference ...</p>
+<h2 id="removed-limitations-for-functional-style">Removed Limitations for Functional Style</h2>
+<p>Multiple output arguments can now be used in functional style, e.g.</p>
+<pre><code>nchnls = 2
+instr 1
+  sig:a = rand(0dbfs/10)
+  aL,aR = pan2(sig,3/4)
+  out(aL,aR)
+endin
+schedule(1,0,1)
+</code></pre>
+<h2 id="for-loop">For-Loop</h2>
+<p>Is it going to happen??</p>
+<h2 id="user-defined-types">User-Defined Types</h2>
+<pre><code>struct MyType val0:i, val1:i
+
+instr 1
+testVal:MyType init 8, 88
+print(testVal.val0)
+print(testVal.val1)
+endin
+schedule(1,0,0)
+</code></pre>
               
             </div>
           </div><footer>

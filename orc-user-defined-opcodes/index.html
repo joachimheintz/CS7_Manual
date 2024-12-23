@@ -58,9 +58,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -119,6 +119,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -150,7 +152,22 @@
 <h2 id="old-style-udo-definition">Old style UDO definition</h2>
 <p>The implementation is described in detail in the manual page for <code>opcode</code> (link to that page).</p>
 <h2 id="new-style-udo-definition">New style UDO definition</h2>
-<p>(to be written, including the pass-by-reference as distinction to old style UDOs)</p>
+<p>User Defined Opcodes now follow the syntax <code>opcode name(inargs):(outargs)</code>. </p>
+<pre><code>opcode myop(inval:i):(i)
+  xout(inval+1)
+endop
+
+opcode empty():void
+  puts(&quot;empty!&quot;,1)
+endop
+
+instr 1
+  print(myop(17))
+  empty()
+endin
+schedule(1,0,0
+</code></pre>
+<p>Give example for pass-by-reference as difference to old style UDOs.</p>
               
             </div>
           </div><footer>

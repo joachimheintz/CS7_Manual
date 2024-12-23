@@ -58,9 +58,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -121,6 +121,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -148,7 +150,7 @@
               
                 <h1 id="data-types-and-variables">Data Types and Variables</h1>
 <h2 id="implicit-types">Implicit Types</h2>
-<p>Data types in Csound 6 and earlier were declared using abbreviations. These abbreviations were integrated in variables names. (Local variables have their scope in one instrument. Global variables can be accessed and altered in any instrument or in the global space.)</p>
+<p>Data types in Csound 6 and earlier were declared one of the characters <em>i, k, a, S, w</em> as first character of the variable name. This applied for local variables which are only valid in the scope of an instrument. For global variables these type specifiers were prefixed by the <em>g</em> character.</p>
 <table>
 <thead>
 <tr>
@@ -220,10 +222,24 @@
 </table>
 <h2 id="explicit-types">Explicit Types</h2>
 <p>In Csound 7 the data type can be given explicitely, without being bound to the name. </p>
-<pre><code>freq:i = 442
-amp:k = linen:k(1,.1,p3,.1)
-sine:a = poscil:a(.2,400)
-[CONTINUE]
+<pre><code>nchnls  =   2
+0dbfs   =   1
+
+instr 1
+  freq:i = 442
+  amp:k = linen:k(1,.1,p3,.1)
+  sine:a = poscil:a(.2,freq)
+  outch(1,sine*amp)
+  dB@global:i = -6
+  env@global:k = linseg(1,p3,0)
+  tri@global:a = vco2(.3,200)
+endin
+schedule(1,0,3)
+
+instr 2
+  outch(2,tri*ampdb(dB)*env)
+endin
+schedule(2,0,3)
 </code></pre>
 <h2 id="constants-and-reserved-symbols">Constants and Reserved Symbols</h2>
 <p>Constants are available continuously and do not change in value. Usually they are connected with reserved symbols and written in the orchestra header:</p>

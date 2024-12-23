@@ -58,9 +58,9 @@
               <ul>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-how-csound-works/">How Csound Works</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
-                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csound-command/">The `csound` Command</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../invoke-the-csd-file-format/">The `.csd` File Format</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../invoke-cs-options-alphabetically/">Csound Options (flags) Alphabetically</a>
                   </li>
@@ -115,6 +115,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../misc-udp-server/">UDP Server</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../misc-rt-audio/">Real-Time Audio</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -143,26 +145,27 @@
                 <h1 id="header-statements-and-global-space">Header Statements and Global Space</h1>
 <p>The Orchestra Header contains global information that applies to all instruments and defines aspects of Csound's output. It is sometimes referred to as <em>instr 0</em>, because it behaves as an instrument, but without k- or a-rate processing (i.e. only opcodes and instructions that work at i-rate are allowed).</p>
 <p>The most essential statements given in the orchestra header are:</p>
-<p><code>sr</code> the sample rate (default 44100)</p>
-<p><code>ksmps</code> the number of samples for one control period (default 10)<br />
-NOTE: It is recommended to specify <code>ksmps</code> and let Csound calculate <code>kr</code>. <code>ksmps</code> must be an integer and should usually be a power of two.</p>
-<p><code>nchnls</code> the number of audio channels (default 1)<br />
-NOTE: This refers to both, output and input channels. Use <code>nchnls_i</code> in case input and output do not have the same number of channels.</p>
-<p><code>0dbfs</code> the number which serves as amplitude value for zero dB full scale (default 32768)</p>
+<p><code>sr</code> the sample rate (default 44100)<br />
+<code>ksmps</code> the number of samples for one control period (default 10)<br />
+NOTE: It is recommended to specify <code>ksmps</code> and let Csound calculate <code>kr</code>. <code>ksmps</code> must be an integer and should usually be a power of two.<br />
+<code>nchnls</code> the number of audio channels (default 1)<br />
+NOTE: This refers to both, output and input channels. Use <code>nchnls_i</code> in case input and output do not have the same number of channels.<br />
+<code>0dbfs</code> the number which serves as amplitude value for zero dB full scale (default 32768)</p>
 <p>A standard Csound header may look like this:</p>
-<p><code>sr = 48000
+<pre><code>sr = 48000
 ksmps = 32
 nchnls = 2
-0dbfs = 1</code></p>
+0dbfs = 1
+</code></pre>
 <p>Other common header statements:</p>
-<p><code>nchnls_i</code> the number of input channels (if different from <code>nchnls</code>)</p>
-<p><code>A4</code> the frequency set to pitch A4 (default 440)</p>
-<p><code>seed</code> sets the global seed for most random generators<br />
-NOTE: The syntax is <code>seed 0</code> or <code>seed(0)</code> but NOT <code>seed = 0</code></p>
-<p><code>massign</code> assigns incoming midi to a specific instrument</p>
-<p><code>pgmassign</code> assigns a MIDI program number to a specific instrument</p>
-<p><code>ctrlinit</code> sets the initial values for a set of MIDI controllers</p>
-<p><code>ftgen</code> generates a function table</p>
+<p><code>nchnls_i</code> the number of input channels (if different from <code>nchnls</code>)<br />
+<code>A4</code> the frequency set to pitch A4 (default 440)<br />
+<code>seed</code> sets the global seed for most random generators<br />
+NOTE: The syntax is <code>seed 0</code> or <code>seed(0)</code> but NOT <code>seed = 0</code><br />
+<code>massign</code> assigns incoming midi to a specific instrument<br />
+<code>pgmassign</code> assigns a MIDI program number to a specific instrument<br />
+<code>ctrlinit</code> sets the initial values for a set of MIDI controllers<br />
+<code>ftgen</code> generates a function table</p>
 <p>The instrument header is part of the global space. This space continues between and after the instrument code, and is evaluated as a whole before any instrument is running. </p>
               
             </div>
